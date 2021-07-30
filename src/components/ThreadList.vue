@@ -1,5 +1,6 @@
 <script>
 import sourceData from "@/data.json";
+import AppDate from '@/components/AppDate'
 export default {
   props: {
     threads: {
@@ -12,6 +13,9 @@ export default {
       posts: sourceData.posts,
       users: sourceData.users,
     };
+  },
+  components:{
+    AppDate
   },
   methods: {
     postById(postId) {
@@ -37,10 +41,7 @@ export default {
           <p>
             <router-link :to="{name: 'ThreadShow', params: {id: thread.id}}">{{ thread.title }}</router-link>
           </p>
-          <p class="text-faded text-xsmall">
-            By <a href="#">{{ userById(thread.userId).name }}</a
-            >, {{ thread.publishedAt }}.
-          </p>
+          By <a href="#">{{ userById(thread.userId).name }}</a>, <AppDate :timestamp="thread.publishedAt" />
         </div>
 
         <div class="activity">
@@ -56,7 +57,7 @@ export default {
             <p class="text-xsmall">
               <a href="#">{{ userById(thread.userId).name }}</a>
             </p>
-            <p class="text-xsmall text-faded">{{ thread.publishedAt }}</p>
+            <p class="text-xsmall text-faded"><AppDate :timestamp="thread.publishedAt" /></p>
           </div>
         </div>
       </div>

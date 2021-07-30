@@ -1,6 +1,5 @@
 <script>
 import sourceData from "@/data.json";
-import AppDate from '@/components/AppDate'
 export default {
   props: {
     threads: {
@@ -13,9 +12,6 @@ export default {
       posts: sourceData.posts,
       users: sourceData.users,
     };
-  },
-  components:{
-    AppDate
   },
   methods: {
     postById(postId) {

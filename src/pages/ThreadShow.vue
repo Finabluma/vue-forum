@@ -1,6 +1,7 @@
 <script>
 import sourceData from "@/data.json";
 import PostList from "@/components/PostList";
+import PostEditor from "@/components/PostEditor";
 export default {
   name: "ThreadShow",
   props: {
@@ -11,28 +12,23 @@ export default {
   },
   components: {
     PostList,
+    PostEditor,
   },
   data() {
     return {
       threads: sourceData.threads,
       posts: sourceData.posts,
-      newPostText: "",
     };
   },
   methods: {
-    addPost() {
-      const postId = "ggqq" + Math.random();
+    addPost(eventData) {
+      console.log(eventData)
       const post = {
-        id: postId,
-        text: this.newPostText,
-        publishedAt: Math.floor(Date.now() / 1000),
-        threadId: this.id,
-        userId: "rpbB8C6ifrYmNDufMERWfQUoa202",
+        ...eventData.post,
+        threadId: this.id
       };
-      this.posts.push(post)
-      this.thread.posts.push(postId)
-
-      this.newPostText = ""
+      this.posts.push(post);
+      this.thread.posts.push(post.id);
     },
   },
   computed: {
@@ -319,22 +315,6 @@ export default {
   <div class="col-large push-top">
     <h1>{{ thread.title }}</h1>
     <PostList :posts="threadPosts" />
-    <div class="col-full">
-      <form @submit.prevent="addPost">
-        <div class="form-group">
-          <textarea
-            v-model="newPostText"
-            name=""
-            id=""
-            cols="30"
-            rows="10"
-            class="form-input"
-          />
-        </div>
-        <div class="form-actions">
-          <button class="btn-blue">Submit post</button>
-        </div>
-      </form>
-    </div>
+    <PostEditor @save="addPost"/>
   </div>
 </template>
